@@ -7,20 +7,24 @@ export function ChatWindow({children}) {
             {children}
         </div>
     );
-}
+};
 
-export function MessageList() {
+export function MessageWrapper({children}) {
     return (
         <div className="message-list">
-            Message 1
-            <br/>
-            Message 2
-            <br/>
+            {children}
         </div>
     );
-}
+};
 
-export function MessageInput() {
+export function MessageList({msgList}) {
+    const listData = msgList.map((item, i) => <li key={i}><br/>{item.from} {item.message}</li>);
+    return (
+        <ul>{listData}</ul>
+    );
+};
+
+export function MessageInput({onClick}) {
     const [value, setValue] = useState("");
     
     const handleChange = e => {
@@ -43,7 +47,8 @@ export function MessageInput() {
                 />
                 <button 
                 className="send"
-                onClick={handleSubmit} 
+                value={value}
+                onClick={onClick} 
                 type="submit">
                 Send
                 </button>

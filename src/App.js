@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from "react";
 import Wrapper from "./components/views/Wrapper";
 import Main from './components/views/Main';
-import {GroupBox, CreateGroup, JoinGroup, ConnectWallet} from './components/views/Groups';
-import {MessageInput,ChatWindow,MessageList} from './components/views/Chat';
+import {GroupBox, CreateGroup, JoinGroup, ConnectWallet, ReloadMessages} from './components/views/Groups';
+import {MessageInput,MessageWrapper,ChatWindow,MessageList} from './components/views/Chat';
 import { InputGroupID, JoinWindow } from "./components/views/Join";
 import * as backend from './build/index.main.mjs';
 import { loadStdlib } from '@reach-sh/stdlib';
@@ -10,19 +10,11 @@ import { ALGO_MyAlgoConnect as MyAlgoConnect } from '@reach-sh/stdlib';
 import { render } from "@testing-library/react";
 
 const reach = loadStdlib({
-  REACH_CONNECTOR_MODE: "ALGO",
-  REACH_DEBUG: "YES",
+  REACH_CONNECTOR_MODE: "ALGO"
+  //,REACH_DEBUG: "YES"
 });
 const {standardUnit} = reach;
-// let acc = {};
-// //let stdlib = {};
-// let addr;
-// let bal;
-// let balAtomic;
-// let ctc = {};
-// let groupID;
-// let MessengerApi;
-// let isOptedIn;
+let messageList = [];
 
 reach.setWalletFallback(reach.walletFallback({
   providerEnv: {
@@ -39,43 +31,32 @@ const sendToAddr = "0xdc6d5ee0fd3fa0c8a35c620ce07a26d4d03f14d718dab869560fa0d918
 
 function App() {
 
-  // const[acc, setAcc] = useState({});
-  // const[addr, setAddr] = useState({});
-  // const[bal, setBal] = useState({});
-  // const[balAtomic, setBalAtomic] = useState();
-
-  // const [defaults, setInfo] = useState({
-  //   acc: {},
-  //   ctc: {},
-  //   bal: 0,
-  //   defaultFundAmt: '10',
-  //   standardUnit
-  // })
-
-  // const [contractInfo, setContract] = useState({
-  //   ctc: {},
-  //   groupID: "",
-  //   MessengerApi: {},
-  //   isOptedIn: false
-  // })
-
   const [showJoinWindow, setJoinWindow] = useState(false);
   const [acc, setAcc] = useState({});
   const [ctc, setCtc] = useState({});
   const [groupID, setGroupID] = useState("");
-  const [api, setApi] = useState({}); 
+  const [MessengerApi, setApi] = useState({}); 
   const [isOptedIn, setOptIn] = useState(false);
+  const [Publisher, setPublisher] = useState({});
+
+  const [msgList, setMsgList] = useState([]);
+
+  useEffect(() => {
+    console.log("acc info: ", acc);
+		console.log("Messages: ", msgList);
+    console.log("ctc info: ", ctc);
+    console.log("groupID: ", groupID);
+    console.log("MessengengerApi: ", MessengerApi);
+    console.log("Publisher: ", Publisher);
+	});
 
   const connectWallet = async () => {
       const acc = await reach.getDefaultAccount();
       const addr = await acc.getAddress();
       const balAtomic = await reach.balanceOf(acc);
       const bal = reach.formatCurrency(balAtomic, 4);
-      console.log(bal);
       console.log("This users account: ", addr);
-      console.log(acc);
       setAcc(acc);
-      return("Component unmounted");
   }
 
   const createGroup=async() => {
@@ -104,18 +85,55 @@ function App() {
 
   const attach=async(groupID) => {
     const ctcInfo = JSON.parse(groupID);
-    // setGroupID({ctcInfo});
-    console.log(ctcInfo);
-    console.log(acc);
+    //console.log(ctcInfo);
+    //console.log(acc);
     const ctc = await acc.contract(backend, ctcInfo);
+    
     const MessengerApi = await ctc.a.MessengerApi;
+    // Add this and find a way to check in opted in already
+    //
+    // console.log(`connecting to application`, groupID);
+    // const isOptedIn = await MessengerApi.optIn();
+    // setOptIn(isOptedIn);
+    // console.log("Is opted in: ", isOptedIn)
+
     setCtc(ctc);
     setApi(MessengerApi);
-    console.log(`connecting to application`, groupID);
+    setGroupID(ctcInfo);
+    setJoinWindow(false);
+  };
+
+  const loadMessages=async() => {
+    const Publisher = await ctc.e.Publisher;
+    setPublisher(Publisher);
+    Publisher.messageSent.monitor((event) => {
+      messageList.push({
+        from: event.what[0].from,
+        message: event.what[0].message
+      })
+      setMsgList(messageList);
+    })
+  }
+
+  const sendMessage=async(message) => {
     //debugger;
-    const isOptedIn = await MessengerApi.optIn();
-    setOptIn(true);
-    console.log("Is opted in: ", isOptedIn)
+    const senderAddr = acc.getAddress();
+
+    if(message.length < 20){
+        message = message.padEnd(20, ' ');
+    };
+    const messageMap = {
+      from: senderAddr,
+      message: message,
+      to: sendToAddr
+    };
+    try{
+      const isMessageSent = await MessengerApi.sendMessage(messageMap);
+      console.log(`isMessageSent: ${isMessageSent}`);
+      console.log('Message submitted:', message);
+    }catch(error){
+      console.log(error);
+    }
   }
 
   return (
@@ -125,16 +143,27 @@ function App() {
         <ConnectWallet onClick={connectWallet}/>
         <CreateGroup onClick={createGroup}/>
         <JoinGroup onClick={() => setJoinWindow(true)}/>
+        <ReloadMessages onClick={loadMessages}/>
       </GroupBox>
 
       <ChatWindow>
-        <MessageList/>
-        <MessageInput/>
+        <MessageWrapper>
+          <MessageList msgList={msgList}/>
+        </MessageWrapper>
+        <MessageInput 
+          onClick={ e => {
+            e.preventDefault()
+            sendMessage(e.target.value)
+          }}/>
       </ChatWindow>
     </Main>
     { showJoinWindow ? 
     <JoinWindow>
-      <InputGroupID onClick={e => attach(e.target.value)}/>
+      <InputGroupID 
+        onClick={ e => {
+        e.preventDefault()
+        attach(e.target.value)
+        }}/>
     </JoinWindow> : null }
     </Wrapper>
   );

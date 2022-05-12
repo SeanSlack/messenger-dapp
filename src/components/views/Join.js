@@ -1,5 +1,5 @@
 import "./Join.css";
-import React, { Children, useState } from 'react';
+import React, {useState } from 'react';
 
 export function JoinWindow({children}) {
     return (
@@ -12,7 +12,7 @@ export function JoinWindow({children}) {
 
 export function InputGroupID({onClick}) {
     const [value, setValue] = useState("");
-    
+
     const handleChange = e => {
         setValue(e.target.value);
       };
@@ -21,7 +21,7 @@ export function InputGroupID({onClick}) {
     //     e.preventDefault();
     //     {onClick};
     // }
-
+    
     return (
         <div className="id-wrapper">
             <form>

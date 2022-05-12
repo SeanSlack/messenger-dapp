@@ -32,3 +32,11 @@ export function JoinGroup({onClick}) {
         >Join</button>
     );
 };
+
+export function ReloadMessages({onClick}) {
+  return (
+      <button className="button"
+        onClick={onClick}
+      >Reload</button>
+  );
+};
