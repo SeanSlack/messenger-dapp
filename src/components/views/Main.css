@@ -1,0 +1,7 @@
+.main {
+    width: 90vw;
+    height: 90vh;
+    border-radius: 20px;
+    position:absolute;
+    background-image: linear-gradient(315deg, #273a4e 0%, #1c4f88 74%);
+  }
