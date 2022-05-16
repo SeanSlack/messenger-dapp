@@ -11,31 +11,53 @@ export function JoinWindow({children}) {
 }
 
 export function InputGroupID({onClick}) {
-    const [value, setValue] = useState("");
+    const [value, setValue] = useState({
+        groupID: "",
+        username: ""
+    });
 
     const handleChange = e => {
-        setValue(e.target.value);
-      };
+        e.preventDefault();
+        setValue(prev => ({
+            ...prev,
+            [e.target.name]: e.target.value
+        }));
+    };
 
-    // const handleSubmit = (e) => {
+    // const handleSubmit = e => {
     //     e.preventDefault();
-    //     {onClick};
+        
+    //     console.log(value);
     // }
     
     return (
         <div className="id-wrapper">
             <form>
+                <label>
+                Group ID
                 <input
                 className="id"
                 type="text"
-                value={value}
+                name="groupID"
+                value={value.groupID || ""}
                 onChange={handleChange}
                 />
+                </label>
+                <label>
+                Username
+                <input
+                className="id"
+                type="text"
+                name="username"
+                value={value.username || ""}
+                onChange={handleChange}
+                />
+                </label>
                 <button 
                 className="join"
-                onClick={onClick}
-                value={value}
-                type="submit">
+                type="submit"
+                value={JSON.stringify(value)}
+                onClick={onClick} >
                 Join
                 </button>
             </form>

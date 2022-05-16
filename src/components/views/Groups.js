@@ -40,3 +40,12 @@ export function ReloadMessages({onClick}) {
       >Reload</button>
   );
 };
+
+export function GroupButton({onClick,value}) {
+  return (
+    <div><button 
+    className="group"
+    onClick={onClick}
+    >{value}</button></div>
+  );
+}

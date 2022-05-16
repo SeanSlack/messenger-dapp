@@ -2,8 +2,14 @@
 
 const Message = Struct([
     ['from', Address],
+    ['username', Bytes(20)],
     ['message', Bytes(20)],
     ['to', Address]
+])
+
+const Username = Struct([
+    ['addr', Address],
+    ['username', Bytes(20)]
 ])
 
 export const main  = Reach.App(() => {
@@ -16,22 +22,29 @@ export const main  = Reach.App(() => {
       });
 
     const Admin = Participant('Admin', {
-    ready: Fun([], Null)
+    ready: Fun([], Null),
+    groupName: Bytes(20)
     });
-
 
     const MessengerApi = API('MessengerApi', {
     sendMessage: Fun([Message], Bool),
     receiveMessage: Fun([], Message),
-    optIn: Fun([], Bool)
+    getUsername: Fun([], Username),
+    optIn: Fun([Username], Bool)
     })
 
     const Publisher = Events('Publisher', {
-        messageSent: [Message]
+        messageSent: [Message],
+        newUser: [Username]
       });
 
     init();
-    Admin.publish();
+
+    Admin.only(() => {
+        const groupName = declassify(interact.groupName);
+    });
+
+    Admin.publish(groupName);
 
     Admin.only(() => {
         interact.ready();
@@ -40,27 +53,36 @@ export const main  = Reach.App(() => {
     // map of key address and message type
 
   const MessageMap = new Map(Message)
+  const UsernameMap = new Map(Username)
 
   const [shouldContinue] = parallelReduce([true]).define(() => {
     }).paySpec([]).invariant(balance() == 0)
     .while(shouldContinue)
     .api(MessengerApi.sendMessage, (message, apiReturn) =>{
-        MessageMap[this] = message;
         Publisher.messageSent(message);
-        MessageMap[message.to] = message
+        MessageMap[message.to] = message;
         apiReturn(true);
-        return [true]
-    }).api(MessengerApi.receiveMessage, (apiReturn) => {
-        const message = fromSome(MessageMap[this], Message.fromObject({ from: this,
-                            to: this,
-                            message:'12345678901234567890'}));
-        apiReturn(message);
-        return [true]
+        return [true];
     })
-    .api(MessengerApi.optIn, (apiReturn) => {
-        MessageMap[this] =  Message.fromObject({ from: this,
-            to: this,
-            message:'12345678901234567890'});
+    .api(MessengerApi.receiveMessage, (apiReturn) => {
+        const message = fromSome(MessageMap[this], Message.fromObject({ 
+                            from: this,
+                            username: '12345678901234567890',
+                            message:'12345678901234567890',
+                            to: this,}));
+        apiReturn(message);
+        return [true];
+    })
+    .api(MessengerApi.getUsername, (apiReturn) => {
+        const username = fromSome(UsernameMap[this], Username.fromObject({ 
+                            addr: this,
+                            username: '12345678901234567890',}));
+        apiReturn(username);
+        return[true];
+    })
+    .api(MessengerApi.optIn, (username, apiReturn) =>{
+        UsernameMap[this] = username;
+        Publisher.newUser(username);
         apiReturn(true);
         return [true];
     });

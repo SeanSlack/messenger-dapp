@@ -1,11 +1,13 @@
 .box {
     width: 20%;
-    height: 100%;
+    height:100%;
     background-color: #0000000b;
     border-radius: 20px;
-    display: inline-block;
-    vertical-align:middle;
+    display:inline-block;
+    position:static;
+    align-items:center;
     text-align: center;
+    vertical-align:top;
     color: #25394ac2;
 }
 
@@ -14,6 +16,17 @@
     border-radius: 10px;
     padding: 10px;
     margin-top: 10px;
+    background-color: #3f6288;
+    font-size:large;
+    color: rgb(250, 250, 250);
+}
+
+.group {
+    width: 60px;
+    height: 60px;
+    border-radius: 30px;
+    padding: 10px;
+    margin-top: 20px;
     background-color: #3f6288;
     font-size:large;
     color: rgb(250, 250, 250);
