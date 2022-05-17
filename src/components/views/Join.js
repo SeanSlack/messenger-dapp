@@ -23,12 +23,6 @@ export function InputGroupID({onClick}) {
             [e.target.name]: e.target.value
         }));
     };
-
-    // const handleSubmit = e => {
-    //     e.preventDefault();
-        
-    //     console.log(value);
-    // }
     
     return (
         <div className="id-wrapper">
