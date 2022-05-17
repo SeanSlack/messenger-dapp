@@ -1,48 +1,66 @@
 .chat {
     height: 100%;
     width: 60%;
-    display: inline-block;
     background-color: #ffffff09;
     text-align: center;
+    display: inline-block;
     vertical-align: middle;
-    box-sizing: border-box;
-    padding: 30px;
+}
+
+.message-window {
+    width: 100%;
+    height: 90%;
+    overflow-y: scroll;
+    overflow-x:hidden;
 }
 
 .message-list {
-    height: 90%;
+    height: 100%;
     width: 100%;
     text-align: left;
-    color: #c5c5c5;
+    color: rgb(247, 247, 247);
 }
+
+.message {
+    width: fit-content;
+    margin-top: 10px;
+    padding: 20px 20px;
+    border-radius: 20px;
+    font-family: Verdana, Geneva, sans-serif;
+    color: #FFF;
+    background-color: #3f6288;
+}
+
+.br {
+    display: block;
+    content: "";
+    margin: 10px;
+ }
 
 .input-wrapper {
     height: 10%;
     width: 100%;
-    vertical-align: bottom;
-    border-radius: 20px;
-    background-color: #ffffff08;
+    align-items: center;
     color: #00000009;
 }
 
 .message-text[type=text] {
-    height: 40px;
-    width: 80%;
+    height: 50px;
+    width: 70%;
     background-color: #4789c22d;
     border-radius: 10px;
-    margin-left: 10px;
-    color: rgb(230, 230, 230);
+    border: none;
+    color: rgb(247, 247, 247);
     font-size: large;
 }
 
 .send[type=submit] {
-    height: 20%;
-    width: 10%;
+    width: 20%;
     border-radius: 10px;
     padding: 10px;
-    margin-top: 30px;
     margin-left:10px;
     background-color: #3f6288;
     font-size:large;
-    color: rgb(205, 205, 205);
+    border: none;
+    color: rgb(247, 247, 247);
 }

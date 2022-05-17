@@ -1,9 +1,9 @@
 .wrapper {
-    min-height: 100vh;
-    min-width: 100vw;
+    height: 100vh;
+    width: 100vw;
+    position: absolute;
     display: flex;
     justify-content: center;
     align-items: center;
-    display: flex;
     background-image: linear-gradient(315deg, #314f72 40%, #324771 70%);
 }

@@ -1,14 +1,15 @@
 import React, { useEffect, useState } from "react";
 import Wrapper from "./components/views/Wrapper";
 import Main from './components/views/Main';
-import {GroupButton, GroupBox, CreateGroup, JoinGroup, ConnectWallet, ReloadMessages} from './components/views/Groups';
-import {MessageInput,MessageWrapper,ChatWindow,MessageList} from './components/views/Chat';
+import {GroupButton, GroupBox, JoinGroup, ConnectWallet, CreateGroup} from './components/views/Groups';
+import {MessageWindow, MessageInput,MessageWrapper,ChatWindow,MessageList} from './components/views/Chat';
 import { InputGroupID, JoinWindow } from "./components/views/Join";
 import { InputGroupName, CreateWindow } from "./components/views/Create";
+import { Header } from "./components/views/Header";
+import { OuterBox } from "./components/views/OuterBox";
 import * as backend from './build/index.main.mjs';
 import { loadStdlib } from '@reach-sh/stdlib';
 import { ALGO_MyAlgoConnect as MyAlgoConnect } from '@reach-sh/stdlib';
-import { render } from "@testing-library/react";
 import algosdk from "algosdk";
 
 const reach = loadStdlib({
@@ -48,7 +49,7 @@ function App() {
   const [groupInfo, setGroupInfo] = useState({})
 
   const [msgList, setMsgList] = useState([{}]);
-  const [usrList, setUserList] = useState([{}])
+  const [usrList, setUserList] = useState([{}]);
   const [groupList, setGroups] = useState([]);
 
   useEffect(() => {
@@ -58,6 +59,8 @@ function App() {
     console.log("groupID: ", groupID);
     console.log("MessengengerApi: ", MessengerApi);
     console.log("Publisher: ", Publisher);
+
+    reload();
 	});
 
   const connectWallet = async () => {
@@ -184,6 +187,7 @@ function App() {
   const reload = () => {
     loadMessages();
     loadUsernames();
+    console.log("reloading")
   }
 
   const sendMessage=async(message) => {
@@ -236,50 +240,56 @@ function App() {
 
 
   return (
-    <Wrapper>
-    <Main className={"main"}>
-      <GroupBox>
-        <ConnectWallet onClick={connectWallet}/>
-        <CreateGroup onClick={() => setCreateWindow(true)}/>
-        <JoinGroup onClick={() => setJoinWindow(true)}/>
-        <ReloadMessages onClick={reload}/>
-        {groupList.map((id, i) => {
-          return (<GroupButton value={i} onClick={ e => {
-            //e.preventDefault()
-            selectGroup(id)
-            }}/>);
-        })}
-      </GroupBox>
+      <Wrapper>
+        <OuterBox>
+        <Header/>
+        <Main className={"main"}>
+          <GroupBox>
+            <ConnectWallet onClick={connectWallet}/>
+            <CreateGroup onClick={() => setCreateWindow(true)}/>
+            <JoinGroup onClick={() => setJoinWindow(true)}/>
+            {groupList.map((id, i) => {
+              return (<GroupButton value={i} onClick={ e => {
+                //e.preventDefault()
+                selectGroup(id)
+                }}/>);
+            })}
+          </GroupBox>
 
-      <ChatWindow>
-        <MessageWrapper>
-          <MessageList msgList={msgList}/>
-        </MessageWrapper>
-        <MessageInput 
-          onClick={ e => {
+        <ChatWindow>
+          <MessageWindow>
+            <MessageWrapper>
+              <MessageList msgList={msgList}/>
+            </MessageWrapper>
+          </MessageWindow>
+          <MessageInput 
+            onClick={ e => {
+              e.preventDefault()
+              sendMessage(e.target.value)
+            }}/>
+        </ChatWindow>
+
+        { showJoinWindow ? 
+        <JoinWindow>
+          <InputGroupID
+            onClick={ e => {
+              e.preventDefault()
+              optIn(e.target.value)
+              }}
+            />
+        </JoinWindow> : null }
+        { showCreateWindow ? 
+        <CreateWindow>
+          <InputGroupName
+            onClick={ e => {
             e.preventDefault()
-            sendMessage(e.target.value)
-          }}/>
-      </ChatWindow>
-    </Main>
-    { showJoinWindow ? 
-    <JoinWindow>
-      <InputGroupID
-        onClick={ e => {
-          e.preventDefault()
-          optIn(e.target.value)
-          }}
-        />
-    </JoinWindow> : null }
-    { showCreateWindow ? 
-    <CreateWindow>
-      <InputGroupName
-        onClick={ e => {
-        e.preventDefault()
-        createGroup(e.target.value)
-        }}/>
-    </CreateWindow> : null }
-    </Wrapper>
+            createGroup(e.target.value)
+            }}/>
+        </CreateWindow> : null }
+
+        </Main>
+        </OuterBox>
+      </Wrapper>
   );
 }
 

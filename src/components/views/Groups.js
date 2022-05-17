@@ -3,7 +3,7 @@ import "./Groups.css";
 
 export function GroupBox({children}) {
     return (
-      <div className="box">
+      <div className="group-box">
           {children}
       </div>
     );

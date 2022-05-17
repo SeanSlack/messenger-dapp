@@ -3,7 +3,7 @@ import React, {useState } from 'react';
 
 export function CreateWindow({children}) {
     return (
-        <div className="join-window">
+        <div className="create-window">
             Enter group name
             {children}
         </div>

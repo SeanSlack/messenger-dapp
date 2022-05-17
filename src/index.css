@@ -6,3 +6,17 @@ body {
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
   }
+
+ul {
+  list-style-type: none;
+}
+
+::-webkit-scrollbar {
+  height: 12px;
+  width: 15px;
+  background-color: #3f6288;;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #315888;
+}

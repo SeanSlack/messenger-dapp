@@ -17,10 +17,18 @@ export function MessageWrapper({children}) {
     );
 };
 
-export function MessageList({msgList}) {
-    const listData = msgList.map((item, i) => <li key={i}><br/>{item.from} {item.message}</li>);
+export function MessageWindow({children}) {
     return (
-        <ul>{listData}</ul>
+        <div className="message-window">
+        {children}
+        </div>
+    );
+}
+
+export function MessageList({msgList}) {
+    const listData = msgList.map((item, i) => ( <li className="message" key={i} >{item.from} <br className="br"/> {item.message} <br className="br"/> </li>));
+    return (
+        <ul className="message-list">{listData}</ul>
     );
 };
 
