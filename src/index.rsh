@@ -22,14 +22,11 @@ export const main  = Reach.App(() => {
       });
 
     const Admin = Participant('Admin', {
-    ready: Fun([], Null),
-    groupName: Bytes(20)
+    ready: Fun([], Null)
     });
 
     const MessengerApi = API('MessengerApi', {
     sendMessage: Fun([Message], Bool),
-    receiveMessage: Fun([], Message),
-    getUsername: Fun([], Username),
     optIn: Fun([Username], Bool)
     })
 
@@ -40,11 +37,7 @@ export const main  = Reach.App(() => {
 
     init();
 
-    Admin.only(() => {
-        const groupName = declassify(interact.groupName);
-    });
-
-    Admin.publish(groupName);
+    Admin.publish();
 
     Admin.only(() => {
         interact.ready();
@@ -63,22 +56,6 @@ export const main  = Reach.App(() => {
         MessageMap[message.to] = message;
         apiReturn(true);
         return [true];
-    })
-    .api(MessengerApi.receiveMessage, (apiReturn) => {
-        const message = fromSome(MessageMap[this], Message.fromObject({ 
-                            from: this,
-                            username: '12345678901234567890',
-                            message:'12345678901234567890',
-                            to: this,}));
-        apiReturn(message);
-        return [true];
-    })
-    .api(MessengerApi.getUsername, (apiReturn) => {
-        const username = fromSome(UsernameMap[this], Username.fromObject({ 
-                            addr: this,
-                            username: '12345678901234567890',}));
-        apiReturn(username);
-        return[true];
     })
     .api(MessengerApi.optIn, (username, apiReturn) =>{
         UsernameMap[this] = username;

@@ -4,7 +4,6 @@ import React, {useState } from 'react';
 export function JoinWindow({children}) {
     return (
         <div className="join-window">
-            Enter GroupID
             {children}
         </div>
     );
@@ -28,8 +27,8 @@ export function InputGroupID({onClick}) {
         <div className="id-wrapper">
             <form>
                 <label>
-                Group ID
                 <input
+                placeholder="Group ID"
                 className="id"
                 type="text"
                 name="groupID"
@@ -38,8 +37,8 @@ export function InputGroupID({onClick}) {
                 />
                 </label>
                 <label>
-                Username
                 <input
+                placeholder="Username"
                 className="id"
                 type="text"
                 name="username"

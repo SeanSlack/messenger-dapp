@@ -50,3 +50,8 @@
     font-size:large;
     color: rgb(205, 205, 205);
 }
+
+::placeholder { /* Chrome, Firefox, Opera, Safari 10.1+ */
+    color: rgb(201, 201, 201);
+    opacity: 1; /* Firefox */
+}

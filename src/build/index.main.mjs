@@ -91,16 +91,13 @@ export async function Admin(ctcTop, interact) {
     None: ctc0,
     Some: ctc5
     });
-  const ctc7 = stdlib.T_Tuple([]);
-  const ctc8 = stdlib.T_Tuple([ctc5]);
-  const ctc9 = stdlib.T_Tuple([ctc3]);
-  const ctc10 = stdlib.T_Data({
-    MessengerApi_getUsername0_41: ctc7,
-    MessengerApi_optIn0_41: ctc8,
-    MessengerApi_receiveMessage0_41: ctc7,
-    MessengerApi_sendMessage0_41: ctc9
+  const ctc7 = stdlib.T_Tuple([ctc5]);
+  const ctc8 = stdlib.T_Tuple([ctc3]);
+  const ctc9 = stdlib.T_Data({
+    MessengerApi_optIn0_34: ctc7,
+    MessengerApi_sendMessage0_34: ctc8
     });
-  const ctc11 = stdlib.T_Bool;
+  const ctc10 = stdlib.T_Bool;
   
   const map0_ctc = ctc4;
   const map0 = stdlib.newMap({
@@ -119,16 +116,14 @@ export async function Admin(ctcTop, interact) {
     });
   
   
-  const v294 = stdlib.protect(ctc2, interact.groupName, 'for Admin\'s interact field groupName');
-  
   const txn1 = await (ctc.sendrecv({
-    args: [v294],
-    evt_cnt: 1,
+    args: [],
+    evt_cnt: 0,
     funcNum: 0,
-    lct: stdlib.checkedBigNumberify('./index.rsh:47:11:dot', stdlib.UInt_max, '0'),
+    lct: stdlib.checkedBigNumberify('./index.rsh:40:11:dot', stdlib.UInt_max, '0'),
     onlyIf: true,
-    out_tys: [ctc2],
-    pay: [stdlib.checkedBigNumberify('./index.rsh:47:11:decimal', stdlib.UInt_max, '0'), []],
+    out_tys: [],
+    pay: [stdlib.checkedBigNumberify('./index.rsh:40:11:decimal', stdlib.UInt_max, '0'), []],
     sim_p: (async (txn1) => {
       const sim_r = { txns: [], mapRefs: [], maps: [] };
       let sim_txn_ctr = stdlib.UInt_max;
@@ -137,16 +132,16 @@ export async function Admin(ctcTop, interact) {
       stdlib.simMapDupe(sim_r, 0, map0);
       stdlib.simMapDupe(sim_r, 1, map1);
       
-      const {data: [v298], secs: v300, time: v299, didSend: v27, from: v297 } = txn1;
+      const {data: [], secs: v192, time: v191, didSend: v22, from: v190 } = txn1;
       
       ;
       
-      const v303 = true;
-      const v304 = v299;
+      const v195 = true;
+      const v196 = v191;
       
       if (await (async () => {
         
-        return v303;})()) {
+        return v195;})()) {
         sim_r.isHalt = false;
         }
       else {
@@ -160,111 +155,67 @@ export async function Admin(ctcTop, interact) {
       }),
     soloSend: true,
     timeoutAt: undefined /* mto */,
-    tys: [ctc2],
+    tys: [],
     waitIfNotPresent: false
     }));
-  const {data: [v298], secs: v300, time: v299, didSend: v27, from: v297 } = txn1;
+  const {data: [], secs: v192, time: v191, didSend: v22, from: v190 } = txn1;
   ;
   stdlib.protect(ctc0, await interact.ready(), {
-    at: './index.rsh:50:23:application',
-    fs: ['at ./index.rsh:49:15:application call to [unknown function] (defined at: ./index.rsh:49:19:function exp)'],
+    at: './index.rsh:43:23:application',
+    fs: ['at ./index.rsh:42:15:application call to [unknown function] (defined at: ./index.rsh:42:19:function exp)'],
     msg: 'ready',
     who: 'Admin'
     });
   
-  let v303 = true;
-  let v304 = v299;
+  let v195 = true;
+  let v196 = v191;
   
   while (await (async () => {
     
-    return v303;})()) {
+    return v195;})()) {
     const txn2 = await (ctc.recv({
       didSend: false,
       evt_cnt: 1,
       funcNum: 2,
-      out_tys: [ctc10],
+      out_tys: [ctc9],
       timeoutAt: undefined /* mto */,
       waitIfNotPresent: false
       }));
-    const {data: [v377], secs: v379, time: v378, didSend: v208, from: v376 } = txn2;
-    switch (v377[0]) {
-      case 'MessengerApi_getUsername0_41': {
-        const v380 = v377[1];
+    const {data: [v245], secs: v247, time: v246, didSend: v137, from: v244 } = txn2;
+    switch (v245[0]) {
+      case 'MessengerApi_optIn0_34': {
+        const v248 = v245[1];
         undefined /* setApiDetails */;
         ;
-        const v398 = stdlib.protect(map1_ctc, await stdlib.mapRef(map1, v376), null);
-        const v399 = '12345678901234567890';
-        const v400 = {
-          addr: v376,
-          username: v399
-          };
-        const v401 = stdlib.fromSome(v398, v400);
-        await txn2.getOutput('MessengerApi_getUsername', 'v401', ctc5, v401);
-        const cv303 = true;
-        const cv304 = v378;
-        
-        v303 = cv303;
-        v304 = cv304;
-        
-        continue;
-        break;
-        }
-      case 'MessengerApi_optIn0_41': {
-        const v459 = v377[1];
-        undefined /* setApiDetails */;
-        ;
-        const v490 = v459[stdlib.checkedBigNumberify('./index.rsh:83:9:spread', stdlib.UInt_max, '0')];
-        await stdlib.mapSet(map1, v376, v490);
+        const v260 = v248[stdlib.checkedBigNumberify('./index.rsh:60:9:spread', stdlib.UInt_max, '0')];
+        await stdlib.mapSet(map1, v244, v260);
         null;
-        const v493 = true;
-        await txn2.getOutput('MessengerApi_optIn', 'v493', ctc11, v493);
-        const cv303 = true;
-        const cv304 = v378;
+        const v263 = true;
+        await txn2.getOutput('MessengerApi_optIn', 'v263', ctc10, v263);
+        const cv195 = true;
+        const cv196 = v246;
         
-        v303 = cv303;
-        v304 = cv304;
-        
-        continue;
-        break;
-        }
-      case 'MessengerApi_receiveMessage0_41': {
-        const v538 = v377[1];
-        undefined /* setApiDetails */;
-        ;
-        const v583 = stdlib.protect(map0_ctc, await stdlib.mapRef(map0, v376), null);
-        const v584 = '12345678901234567890';
-        const v586 = {
-          from: v376,
-          message: v584,
-          to: v376,
-          username: v584
-          };
-        const v587 = stdlib.fromSome(v583, v586);
-        await txn2.getOutput('MessengerApi_receiveMessage', 'v587', ctc3, v587);
-        const cv303 = true;
-        const cv304 = v378;
-        
-        v303 = cv303;
-        v304 = cv304;
+        v195 = cv195;
+        v196 = cv196;
         
         continue;
         break;
         }
-      case 'MessengerApi_sendMessage0_41': {
-        const v617 = v377[1];
+      case 'MessengerApi_sendMessage0_34': {
+        const v292 = v245[1];
         undefined /* setApiDetails */;
         ;
-        const v678 = v617[stdlib.checkedBigNumberify('./index.rsh:61:9:spread', stdlib.UInt_max, '0')];
-        const v682 = v678.to;
+        const v318 = v292[stdlib.checkedBigNumberify('./index.rsh:54:9:spread', stdlib.UInt_max, '0')];
+        const v322 = v318.to;
         null;
-        await stdlib.mapSet(map0, v682, v678);
-        const v684 = true;
-        await txn2.getOutput('MessengerApi_sendMessage', 'v684', ctc11, v684);
-        const cv303 = true;
-        const cv304 = v378;
+        await stdlib.mapSet(map0, v322, v318);
+        const v324 = true;
+        await txn2.getOutput('MessengerApi_sendMessage', 'v324', ctc10, v324);
+        const cv195 = true;
+        const cv196 = v246;
         
-        v303 = cv303;
-        v304 = cv304;
+        v195 = cv195;
+        v196 = cv196;
         
         continue;
         break;
@@ -273,172 +224,6 @@ export async function Admin(ctcTop, interact) {
     
     }
   return;
-  
-  
-  };
-export async function _MessengerApi_getUsername3(ctcTop, interact) {
-  if (typeof(ctcTop) !== 'object' || ctcTop._initialize === undefined) {
-    return Promise.reject(new Error(`The backend for _MessengerApi_getUsername3 expects to receive a contract as its first argument.`));}
-  if (typeof(interact) !== 'object') {
-    return Promise.reject(new Error(`The backend for _MessengerApi_getUsername3 expects to receive an interact object as its second argument.`));}
-  const ctc = ctcTop._initialize();
-  const stdlib = ctc.stdlib;
-  const ctc0 = stdlib.T_Null;
-  const ctc1 = stdlib.T_Address;
-  const ctc2 = stdlib.T_Bytes(stdlib.checkedBigNumberify('<builtin>', stdlib.UInt_max, '20'));
-  const ctc3 = stdlib.T_Struct([['from', ctc1], ['username', ctc2], ['message', ctc2], ['to', ctc1]]);
-  const ctc4 = stdlib.T_Data({
-    None: ctc0,
-    Some: ctc3
-    });
-  const ctc5 = stdlib.T_Struct([['addr', ctc1], ['username', ctc2]]);
-  const ctc6 = stdlib.T_Data({
-    None: ctc0,
-    Some: ctc5
-    });
-  const ctc7 = stdlib.T_Tuple([]);
-  const ctc8 = stdlib.T_Tuple([ctc5]);
-  const ctc9 = stdlib.T_Tuple([ctc3]);
-  const ctc10 = stdlib.T_Data({
-    MessengerApi_getUsername0_41: ctc7,
-    MessengerApi_optIn0_41: ctc8,
-    MessengerApi_receiveMessage0_41: ctc7,
-    MessengerApi_sendMessage0_41: ctc9
-    });
-  
-  const map0_ctc = ctc4;
-  const map0 = stdlib.newMap({
-    ctc: ctc,
-    idx: 0,
-    isAPI: true,
-    ty: map0_ctc
-    });
-  
-  const map1_ctc = ctc6;
-  const map1 = stdlib.newMap({
-    ctc: ctc,
-    idx: 1,
-    isAPI: true,
-    ty: map1_ctc
-    });
-  
-  
-  const [] = await ctc.getState(stdlib.checkedBigNumberify('<builtin>', stdlib.UInt_max, '3'), []);
-  const v339 = stdlib.protect(ctc7, await interact.in(), {
-    at: './index.rsh:1:23:application',
-    fs: ['at ./index.rsh:76:9:application call to [unknown function] (defined at: ./index.rsh:76:9:function exp)', 'at ./index.rsh:58:42:application call to "runMessengerApi_getUsername0_41" (defined at: ./index.rsh:76:9:function exp)', 'at ./index.rsh:58:42:application call to [unknown function] (defined at: ./index.rsh:58:42:function exp)'],
-    msg: 'in',
-    who: 'MessengerApi_getUsername'
-    });
-  const v343 = ['MessengerApi_getUsername0_41', v339];
-  
-  const txn1 = await (ctc.sendrecv({
-    args: [v343],
-    evt_cnt: 1,
-    funcNum: 2,
-    lct: stdlib.checkedBigNumberify('<builtin>', stdlib.UInt_max, '0'),
-    onlyIf: true,
-    out_tys: [ctc10],
-    pay: [stdlib.checkedBigNumberify('./index.rsh:76:9:decimal', stdlib.UInt_max, '0'), []],
-    sim_p: (async (txn1) => {
-      const sim_r = { txns: [], mapRefs: [], maps: [] };
-      let sim_txn_ctr = stdlib.UInt_max;
-      const getSimTokCtr = () => { sim_txn_ctr = sim_txn_ctr.sub(1); return sim_txn_ctr; };
-      
-      stdlib.simMapDupe(sim_r, 0, map0);
-      stdlib.simMapDupe(sim_r, 1, map1);
-      
-      const {data: [v377], secs: v379, time: v378, didSend: v208, from: v376 } = txn1;
-      
-      switch (v377[0]) {
-        case 'MessengerApi_getUsername0_41': {
-          const v380 = v377[1];
-          sim_r.txns.push({
-            kind: 'api',
-            who: "MessengerApi_getUsername"
-            });
-          ;
-          const v398 = stdlib.protect(map1_ctc, await stdlib.simMapRef(sim_r, 1, v376), null);
-          const v399 = '12345678901234567890';
-          const v400 = {
-            addr: v376,
-            username: v399
-            };
-          const v401 = stdlib.fromSome(v398, v400);
-          const v402 = await txn1.getOutput('MessengerApi_getUsername', 'v401', ctc5, v401);
-          
-          sim_r.isHalt = false;
-          
-          break;
-          }
-        case 'MessengerApi_optIn0_41': {
-          const v459 = v377[1];
-          
-          break;
-          }
-        case 'MessengerApi_receiveMessage0_41': {
-          const v538 = v377[1];
-          
-          break;
-          }
-        case 'MessengerApi_sendMessage0_41': {
-          const v617 = v377[1];
-          
-          break;
-          }
-        }
-      return sim_r;
-      }),
-    soloSend: false,
-    timeoutAt: undefined /* mto */,
-    tys: [ctc10],
-    waitIfNotPresent: false
-    }));
-  const {data: [v377], secs: v379, time: v378, didSend: v208, from: v376 } = txn1;
-  switch (v377[0]) {
-    case 'MessengerApi_getUsername0_41': {
-      const v380 = v377[1];
-      undefined /* setApiDetails */;
-      ;
-      const v398 = stdlib.protect(map1_ctc, await stdlib.mapRef(map1, v376), null);
-      const v399 = '12345678901234567890';
-      const v400 = {
-        addr: v376,
-        username: v399
-        };
-      const v401 = stdlib.fromSome(v398, v400);
-      const v402 = await txn1.getOutput('MessengerApi_getUsername', 'v401', ctc5, v401);
-      if (v208) {
-        stdlib.protect(ctc0, await interact.out(v380, v402), {
-          at: './index.rsh:76:10:application',
-          fs: ['at ./index.rsh:76:10:application call to [unknown function] (defined at: ./index.rsh:76:10:function exp)', 'at ./index.rsh:80:18:application call to "apiReturn" (defined at: ./index.rsh:76:48:function exp)', 'at ./index.rsh:76:48:application call to [unknown function] (defined at: ./index.rsh:76:48:function exp)'],
-          msg: 'out',
-          who: 'MessengerApi_getUsername'
-          });
-        }
-      else {
-        }
-      
-      return;
-      
-      break;
-      }
-    case 'MessengerApi_optIn0_41': {
-      const v459 = v377[1];
-      return;
-      break;
-      }
-    case 'MessengerApi_receiveMessage0_41': {
-      const v538 = v377[1];
-      return;
-      break;
-      }
-    case 'MessengerApi_sendMessage0_41': {
-      const v617 = v377[1];
-      return;
-      break;
-      }
-    }
   
   
   };
@@ -463,15 +248,12 @@ export async function _MessengerApi_optIn3(ctcTop, interact) {
     Some: ctc5
     });
   const ctc7 = stdlib.T_Tuple([ctc5]);
-  const ctc8 = stdlib.T_Tuple([]);
-  const ctc9 = stdlib.T_Tuple([ctc3]);
-  const ctc10 = stdlib.T_Data({
-    MessengerApi_getUsername0_41: ctc8,
-    MessengerApi_optIn0_41: ctc7,
-    MessengerApi_receiveMessage0_41: ctc8,
-    MessengerApi_sendMessage0_41: ctc9
+  const ctc8 = stdlib.T_Tuple([ctc3]);
+  const ctc9 = stdlib.T_Data({
+    MessengerApi_optIn0_34: ctc7,
+    MessengerApi_sendMessage0_34: ctc8
     });
-  const ctc11 = stdlib.T_Bool;
+  const ctc10 = stdlib.T_Bool;
   
   const map0_ctc = ctc4;
   const map0 = stdlib.newMap({
@@ -491,22 +273,22 @@ export async function _MessengerApi_optIn3(ctcTop, interact) {
   
   
   const [] = await ctc.getState(stdlib.checkedBigNumberify('<builtin>', stdlib.UInt_max, '3'), []);
-  const v347 = stdlib.protect(ctc7, await interact.in(), {
+  const v223 = stdlib.protect(ctc7, await interact.in(), {
     at: './index.rsh:1:23:application',
-    fs: ['at ./index.rsh:83:9:application call to [unknown function] (defined at: ./index.rsh:83:9:function exp)', 'at ./index.rsh:58:42:application call to "runMessengerApi_optIn0_41" (defined at: ./index.rsh:83:9:function exp)', 'at ./index.rsh:58:42:application call to [unknown function] (defined at: ./index.rsh:58:42:function exp)'],
+    fs: ['at ./index.rsh:60:9:application call to [unknown function] (defined at: ./index.rsh:60:9:function exp)', 'at ./index.rsh:51:42:application call to "runMessengerApi_optIn0_34" (defined at: ./index.rsh:60:9:function exp)', 'at ./index.rsh:51:42:application call to [unknown function] (defined at: ./index.rsh:51:42:function exp)'],
     msg: 'in',
     who: 'MessengerApi_optIn'
     });
-  const v358 = ['MessengerApi_optIn0_41', v347];
+  const v234 = ['MessengerApi_optIn0_34', v223];
   
   const txn1 = await (ctc.sendrecv({
-    args: [v358],
+    args: [v234],
     evt_cnt: 1,
     funcNum: 2,
     lct: stdlib.checkedBigNumberify('<builtin>', stdlib.UInt_max, '0'),
     onlyIf: true,
-    out_tys: [ctc10],
-    pay: [stdlib.checkedBigNumberify('./index.rsh:83:9:decimal', stdlib.UInt_max, '0'), []],
+    out_tys: [ctc9],
+    pay: [stdlib.checkedBigNumberify('./index.rsh:60:9:decimal', stdlib.UInt_max, '0'), []],
     sim_p: (async (txn1) => {
       const sim_r = { txns: [], mapRefs: [], maps: [] };
       let sim_txn_ctr = stdlib.UInt_max;
@@ -515,38 +297,28 @@ export async function _MessengerApi_optIn3(ctcTop, interact) {
       stdlib.simMapDupe(sim_r, 0, map0);
       stdlib.simMapDupe(sim_r, 1, map1);
       
-      const {data: [v377], secs: v379, time: v378, didSend: v208, from: v376 } = txn1;
+      const {data: [v245], secs: v247, time: v246, didSend: v137, from: v244 } = txn1;
       
-      switch (v377[0]) {
-        case 'MessengerApi_getUsername0_41': {
-          const v380 = v377[1];
-          
-          break;
-          }
-        case 'MessengerApi_optIn0_41': {
-          const v459 = v377[1];
+      switch (v245[0]) {
+        case 'MessengerApi_optIn0_34': {
+          const v248 = v245[1];
           sim_r.txns.push({
             kind: 'api',
             who: "MessengerApi_optIn"
             });
           ;
-          const v490 = v459[stdlib.checkedBigNumberify('./index.rsh:83:9:spread', stdlib.UInt_max, '0')];
-          await stdlib.simMapSet(sim_r, 1, v376, v490);
+          const v260 = v248[stdlib.checkedBigNumberify('./index.rsh:60:9:spread', stdlib.UInt_max, '0')];
+          await stdlib.simMapSet(sim_r, 1, v244, v260);
           null;
-          const v493 = true;
-          const v494 = await txn1.getOutput('MessengerApi_optIn', 'v493', ctc11, v493);
+          const v263 = true;
+          const v264 = await txn1.getOutput('MessengerApi_optIn', 'v263', ctc10, v263);
           
           sim_r.isHalt = false;
           
           break;
           }
-        case 'MessengerApi_receiveMessage0_41': {
-          const v538 = v377[1];
-          
-          break;
-          }
-        case 'MessengerApi_sendMessage0_41': {
-          const v617 = v377[1];
+        case 'MessengerApi_sendMessage0_34': {
+          const v292 = v245[1];
           
           break;
           }
@@ -555,29 +327,24 @@ export async function _MessengerApi_optIn3(ctcTop, interact) {
       }),
     soloSend: false,
     timeoutAt: undefined /* mto */,
-    tys: [ctc10],
+    tys: [ctc9],
     waitIfNotPresent: false
     }));
-  const {data: [v377], secs: v379, time: v378, didSend: v208, from: v376 } = txn1;
-  switch (v377[0]) {
-    case 'MessengerApi_getUsername0_41': {
-      const v380 = v377[1];
-      return;
-      break;
-      }
-    case 'MessengerApi_optIn0_41': {
-      const v459 = v377[1];
+  const {data: [v245], secs: v247, time: v246, didSend: v137, from: v244 } = txn1;
+  switch (v245[0]) {
+    case 'MessengerApi_optIn0_34': {
+      const v248 = v245[1];
       undefined /* setApiDetails */;
       ;
-      const v490 = v459[stdlib.checkedBigNumberify('./index.rsh:83:9:spread', stdlib.UInt_max, '0')];
-      await stdlib.mapSet(map1, v376, v490);
+      const v260 = v248[stdlib.checkedBigNumberify('./index.rsh:60:9:spread', stdlib.UInt_max, '0')];
+      await stdlib.mapSet(map1, v244, v260);
       null;
-      const v493 = true;
-      const v494 = await txn1.getOutput('MessengerApi_optIn', 'v493', ctc11, v493);
-      if (v208) {
-        stdlib.protect(ctc0, await interact.out(v459, v494), {
-          at: './index.rsh:83:10:application',
-          fs: ['at ./index.rsh:83:10:application call to [unknown function] (defined at: ./index.rsh:83:10:function exp)', 'at ./index.rsh:86:18:application call to "apiReturn" (defined at: ./index.rsh:83:52:function exp)', 'at ./index.rsh:83:52:application call to [unknown function] (defined at: ./index.rsh:83:52:function exp)'],
+      const v263 = true;
+      const v264 = await txn1.getOutput('MessengerApi_optIn', 'v263', ctc10, v263);
+      if (v137) {
+        stdlib.protect(ctc0, await interact.out(v248, v264), {
+          at: './index.rsh:60:10:application',
+          fs: ['at ./index.rsh:60:10:application call to [unknown function] (defined at: ./index.rsh:60:10:function exp)', 'at ./index.rsh:63:18:application call to "apiReturn" (defined at: ./index.rsh:60:52:function exp)', 'at ./index.rsh:60:52:application call to [unknown function] (defined at: ./index.rsh:60:52:function exp)'],
           msg: 'out',
           who: 'MessengerApi_optIn'
           });
@@ -589,183 +356,8 @@ export async function _MessengerApi_optIn3(ctcTop, interact) {
       
       break;
       }
-    case 'MessengerApi_receiveMessage0_41': {
-      const v538 = v377[1];
-      return;
-      break;
-      }
-    case 'MessengerApi_sendMessage0_41': {
-      const v617 = v377[1];
-      return;
-      break;
-      }
-    }
-  
-  
-  };
-export async function _MessengerApi_receiveMessage3(ctcTop, interact) {
-  if (typeof(ctcTop) !== 'object' || ctcTop._initialize === undefined) {
-    return Promise.reject(new Error(`The backend for _MessengerApi_receiveMessage3 expects to receive a contract as its first argument.`));}
-  if (typeof(interact) !== 'object') {
-    return Promise.reject(new Error(`The backend for _MessengerApi_receiveMessage3 expects to receive an interact object as its second argument.`));}
-  const ctc = ctcTop._initialize();
-  const stdlib = ctc.stdlib;
-  const ctc0 = stdlib.T_Null;
-  const ctc1 = stdlib.T_Address;
-  const ctc2 = stdlib.T_Bytes(stdlib.checkedBigNumberify('<builtin>', stdlib.UInt_max, '20'));
-  const ctc3 = stdlib.T_Struct([['from', ctc1], ['username', ctc2], ['message', ctc2], ['to', ctc1]]);
-  const ctc4 = stdlib.T_Data({
-    None: ctc0,
-    Some: ctc3
-    });
-  const ctc5 = stdlib.T_Struct([['addr', ctc1], ['username', ctc2]]);
-  const ctc6 = stdlib.T_Data({
-    None: ctc0,
-    Some: ctc5
-    });
-  const ctc7 = stdlib.T_Tuple([]);
-  const ctc8 = stdlib.T_Tuple([ctc5]);
-  const ctc9 = stdlib.T_Tuple([ctc3]);
-  const ctc10 = stdlib.T_Data({
-    MessengerApi_getUsername0_41: ctc7,
-    MessengerApi_optIn0_41: ctc8,
-    MessengerApi_receiveMessage0_41: ctc7,
-    MessengerApi_sendMessage0_41: ctc9
-    });
-  
-  const map0_ctc = ctc4;
-  const map0 = stdlib.newMap({
-    ctc: ctc,
-    idx: 0,
-    isAPI: true,
-    ty: map0_ctc
-    });
-  
-  const map1_ctc = ctc6;
-  const map1 = stdlib.newMap({
-    ctc: ctc,
-    idx: 1,
-    isAPI: true,
-    ty: map1_ctc
-    });
-  
-  
-  const [] = await ctc.getState(stdlib.checkedBigNumberify('<builtin>', stdlib.UInt_max, '3'), []);
-  const v331 = stdlib.protect(ctc7, await interact.in(), {
-    at: './index.rsh:1:23:application',
-    fs: ['at ./index.rsh:67:9:application call to [unknown function] (defined at: ./index.rsh:67:9:function exp)', 'at ./index.rsh:58:42:application call to "runMessengerApi_receiveMessage0_41" (defined at: ./index.rsh:67:9:function exp)', 'at ./index.rsh:58:42:application call to [unknown function] (defined at: ./index.rsh:58:42:function exp)'],
-    msg: 'in',
-    who: 'MessengerApi_receiveMessage'
-    });
-  const v335 = ['MessengerApi_receiveMessage0_41', v331];
-  
-  const txn1 = await (ctc.sendrecv({
-    args: [v335],
-    evt_cnt: 1,
-    funcNum: 2,
-    lct: stdlib.checkedBigNumberify('<builtin>', stdlib.UInt_max, '0'),
-    onlyIf: true,
-    out_tys: [ctc10],
-    pay: [stdlib.checkedBigNumberify('./index.rsh:67:9:decimal', stdlib.UInt_max, '0'), []],
-    sim_p: (async (txn1) => {
-      const sim_r = { txns: [], mapRefs: [], maps: [] };
-      let sim_txn_ctr = stdlib.UInt_max;
-      const getSimTokCtr = () => { sim_txn_ctr = sim_txn_ctr.sub(1); return sim_txn_ctr; };
-      
-      stdlib.simMapDupe(sim_r, 0, map0);
-      stdlib.simMapDupe(sim_r, 1, map1);
-      
-      const {data: [v377], secs: v379, time: v378, didSend: v208, from: v376 } = txn1;
-      
-      switch (v377[0]) {
-        case 'MessengerApi_getUsername0_41': {
-          const v380 = v377[1];
-          
-          break;
-          }
-        case 'MessengerApi_optIn0_41': {
-          const v459 = v377[1];
-          
-          break;
-          }
-        case 'MessengerApi_receiveMessage0_41': {
-          const v538 = v377[1];
-          sim_r.txns.push({
-            kind: 'api',
-            who: "MessengerApi_receiveMessage"
-            });
-          ;
-          const v583 = stdlib.protect(map0_ctc, await stdlib.simMapRef(sim_r, 0, v376), null);
-          const v584 = '12345678901234567890';
-          const v586 = {
-            from: v376,
-            message: v584,
-            to: v376,
-            username: v584
-            };
-          const v587 = stdlib.fromSome(v583, v586);
-          const v588 = await txn1.getOutput('MessengerApi_receiveMessage', 'v587', ctc3, v587);
-          
-          sim_r.isHalt = false;
-          
-          break;
-          }
-        case 'MessengerApi_sendMessage0_41': {
-          const v617 = v377[1];
-          
-          break;
-          }
-        }
-      return sim_r;
-      }),
-    soloSend: false,
-    timeoutAt: undefined /* mto */,
-    tys: [ctc10],
-    waitIfNotPresent: false
-    }));
-  const {data: [v377], secs: v379, time: v378, didSend: v208, from: v376 } = txn1;
-  switch (v377[0]) {
-    case 'MessengerApi_getUsername0_41': {
-      const v380 = v377[1];
-      return;
-      break;
-      }
-    case 'MessengerApi_optIn0_41': {
-      const v459 = v377[1];
-      return;
-      break;
-      }
-    case 'MessengerApi_receiveMessage0_41': {
-      const v538 = v377[1];
-      undefined /* setApiDetails */;
-      ;
-      const v583 = stdlib.protect(map0_ctc, await stdlib.mapRef(map0, v376), null);
-      const v584 = '12345678901234567890';
-      const v586 = {
-        from: v376,
-        message: v584,
-        to: v376,
-        username: v584
-        };
-      const v587 = stdlib.fromSome(v583, v586);
-      const v588 = await txn1.getOutput('MessengerApi_receiveMessage', 'v587', ctc3, v587);
-      if (v208) {
-        stdlib.protect(ctc0, await interact.out(v538, v588), {
-          at: './index.rsh:67:10:application',
-          fs: ['at ./index.rsh:67:10:application call to [unknown function] (defined at: ./index.rsh:67:10:function exp)', 'at ./index.rsh:73:18:application call to "apiReturn" (defined at: ./index.rsh:67:51:function exp)', 'at ./index.rsh:67:51:application call to [unknown function] (defined at: ./index.rsh:67:51:function exp)'],
-          msg: 'out',
-          who: 'MessengerApi_receiveMessage'
-          });
-        }
-      else {
-        }
-      
-      return;
-      
-      break;
-      }
-    case 'MessengerApi_sendMessage0_41': {
-      const v617 = v377[1];
+    case 'MessengerApi_sendMessage0_34': {
+      const v292 = v245[1];
       return;
       break;
       }
@@ -794,15 +386,12 @@ export async function _MessengerApi_sendMessage3(ctcTop, interact) {
     Some: ctc5
     });
   const ctc7 = stdlib.T_Tuple([ctc3]);
-  const ctc8 = stdlib.T_Tuple([]);
-  const ctc9 = stdlib.T_Tuple([ctc5]);
-  const ctc10 = stdlib.T_Data({
-    MessengerApi_getUsername0_41: ctc8,
-    MessengerApi_optIn0_41: ctc9,
-    MessengerApi_receiveMessage0_41: ctc8,
-    MessengerApi_sendMessage0_41: ctc7
+  const ctc8 = stdlib.T_Tuple([ctc5]);
+  const ctc9 = stdlib.T_Data({
+    MessengerApi_optIn0_34: ctc8,
+    MessengerApi_sendMessage0_34: ctc7
     });
-  const ctc11 = stdlib.T_Bool;
+  const ctc10 = stdlib.T_Bool;
   
   const map0_ctc = ctc4;
   const map0 = stdlib.newMap({
@@ -822,22 +411,22 @@ export async function _MessengerApi_sendMessage3(ctcTop, interact) {
   
   
   const [] = await ctc.getState(stdlib.checkedBigNumberify('<builtin>', stdlib.UInt_max, '3'), []);
-  const v312 = stdlib.protect(ctc7, await interact.in(), {
+  const v204 = stdlib.protect(ctc7, await interact.in(), {
     at: './index.rsh:1:23:application',
-    fs: ['at ./index.rsh:61:9:application call to [unknown function] (defined at: ./index.rsh:61:9:function exp)', 'at ./index.rsh:58:42:application call to "runMessengerApi_sendMessage0_41" (defined at: ./index.rsh:61:9:function exp)', 'at ./index.rsh:58:42:application call to [unknown function] (defined at: ./index.rsh:58:42:function exp)'],
+    fs: ['at ./index.rsh:54:9:application call to [unknown function] (defined at: ./index.rsh:54:9:function exp)', 'at ./index.rsh:51:42:application call to "runMessengerApi_sendMessage0_34" (defined at: ./index.rsh:54:9:function exp)', 'at ./index.rsh:51:42:application call to [unknown function] (defined at: ./index.rsh:51:42:function exp)'],
     msg: 'in',
     who: 'MessengerApi_sendMessage'
     });
-  const v327 = ['MessengerApi_sendMessage0_41', v312];
+  const v219 = ['MessengerApi_sendMessage0_34', v204];
   
   const txn1 = await (ctc.sendrecv({
-    args: [v327],
+    args: [v219],
     evt_cnt: 1,
     funcNum: 2,
     lct: stdlib.checkedBigNumberify('<builtin>', stdlib.UInt_max, '0'),
     onlyIf: true,
-    out_tys: [ctc10],
-    pay: [stdlib.checkedBigNumberify('./index.rsh:61:9:decimal', stdlib.UInt_max, '0'), []],
+    out_tys: [ctc9],
+    pay: [stdlib.checkedBigNumberify('./index.rsh:54:9:decimal', stdlib.UInt_max, '0'), []],
     sim_p: (async (txn1) => {
       const sim_r = { txns: [], mapRefs: [], maps: [] };
       let sim_txn_ctr = stdlib.UInt_max;
@@ -846,37 +435,27 @@ export async function _MessengerApi_sendMessage3(ctcTop, interact) {
       stdlib.simMapDupe(sim_r, 0, map0);
       stdlib.simMapDupe(sim_r, 1, map1);
       
-      const {data: [v377], secs: v379, time: v378, didSend: v208, from: v376 } = txn1;
+      const {data: [v245], secs: v247, time: v246, didSend: v137, from: v244 } = txn1;
       
-      switch (v377[0]) {
-        case 'MessengerApi_getUsername0_41': {
-          const v380 = v377[1];
+      switch (v245[0]) {
+        case 'MessengerApi_optIn0_34': {
+          const v248 = v245[1];
           
           break;
           }
-        case 'MessengerApi_optIn0_41': {
-          const v459 = v377[1];
-          
-          break;
-          }
-        case 'MessengerApi_receiveMessage0_41': {
-          const v538 = v377[1];
-          
-          break;
-          }
-        case 'MessengerApi_sendMessage0_41': {
-          const v617 = v377[1];
+        case 'MessengerApi_sendMessage0_34': {
+          const v292 = v245[1];
           sim_r.txns.push({
             kind: 'api',
             who: "MessengerApi_sendMessage"
             });
           ;
-          const v678 = v617[stdlib.checkedBigNumberify('./index.rsh:61:9:spread', stdlib.UInt_max, '0')];
-          const v682 = v678.to;
+          const v318 = v292[stdlib.checkedBigNumberify('./index.rsh:54:9:spread', stdlib.UInt_max, '0')];
+          const v322 = v318.to;
           null;
-          await stdlib.simMapSet(sim_r, 0, v682, v678);
-          const v684 = true;
-          const v685 = await txn1.getOutput('MessengerApi_sendMessage', 'v684', ctc11, v684);
+          await stdlib.simMapSet(sim_r, 0, v322, v318);
+          const v324 = true;
+          const v325 = await txn1.getOutput('MessengerApi_sendMessage', 'v324', ctc10, v324);
           
           sim_r.isHalt = false;
           
@@ -887,40 +466,30 @@ export async function _MessengerApi_sendMessage3(ctcTop, interact) {
       }),
     soloSend: false,
     timeoutAt: undefined /* mto */,
-    tys: [ctc10],
+    tys: [ctc9],
     waitIfNotPresent: false
     }));
-  const {data: [v377], secs: v379, time: v378, didSend: v208, from: v376 } = txn1;
-  switch (v377[0]) {
-    case 'MessengerApi_getUsername0_41': {
-      const v380 = v377[1];
+  const {data: [v245], secs: v247, time: v246, didSend: v137, from: v244 } = txn1;
+  switch (v245[0]) {
+    case 'MessengerApi_optIn0_34': {
+      const v248 = v245[1];
       return;
       break;
       }
-    case 'MessengerApi_optIn0_41': {
-      const v459 = v377[1];
-      return;
-      break;
-      }
-    case 'MessengerApi_receiveMessage0_41': {
-      const v538 = v377[1];
-      return;
-      break;
-      }
-    case 'MessengerApi_sendMessage0_41': {
-      const v617 = v377[1];
+    case 'MessengerApi_sendMessage0_34': {
+      const v292 = v245[1];
       undefined /* setApiDetails */;
       ;
-      const v678 = v617[stdlib.checkedBigNumberify('./index.rsh:61:9:spread', stdlib.UInt_max, '0')];
-      const v682 = v678.to;
+      const v318 = v292[stdlib.checkedBigNumberify('./index.rsh:54:9:spread', stdlib.UInt_max, '0')];
+      const v322 = v318.to;
       null;
-      await stdlib.mapSet(map0, v682, v678);
-      const v684 = true;
-      const v685 = await txn1.getOutput('MessengerApi_sendMessage', 'v684', ctc11, v684);
-      if (v208) {
-        stdlib.protect(ctc0, await interact.out(v617, v685), {
-          at: './index.rsh:61:10:application',
-          fs: ['at ./index.rsh:61:10:application call to [unknown function] (defined at: ./index.rsh:61:10:function exp)', 'at ./index.rsh:64:18:application call to "apiReturn" (defined at: ./index.rsh:61:57:function exp)', 'at ./index.rsh:61:57:application call to [unknown function] (defined at: ./index.rsh:61:57:function exp)'],
+      await stdlib.mapSet(map0, v322, v318);
+      const v324 = true;
+      const v325 = await txn1.getOutput('MessengerApi_sendMessage', 'v324', ctc10, v324);
+      if (v137) {
+        stdlib.protect(ctc0, await interact.out(v292, v325), {
+          at: './index.rsh:54:10:application',
+          fs: ['at ./index.rsh:54:10:application call to [unknown function] (defined at: ./index.rsh:54:10:function exp)', 'at ./index.rsh:57:18:application call to "apiReturn" (defined at: ./index.rsh:54:57:function exp)', 'at ./index.rsh:54:57:application call to [unknown function] (defined at: ./index.rsh:54:57:function exp)'],
           msg: 'out',
           who: 'MessengerApi_sendMessage'
           });
@@ -936,17 +505,6 @@ export async function _MessengerApi_sendMessage3(ctcTop, interact) {
   
   
   };
-export async function MessengerApi_getUsername(ctcTop, interact) {
-  if (typeof(ctcTop) !== 'object' || ctcTop._initialize === undefined) {
-    return Promise.reject(new Error(`The backend for MessengerApi_getUsername expects to receive a contract as its first argument.`));}
-  if (typeof(interact) !== 'object') {
-    return Promise.reject(new Error(`The backend for MessengerApi_getUsername expects to receive an interact object as its second argument.`));}
-  const ctc = ctcTop._initialize();
-  const stdlib = ctc.stdlib;
-  const step = await ctc.getCurrentStep()
-  stdlib.assert(step == 3, 'API called in the wrong state. Currently in state: ' + step + ', expected:  [3]');
-  if (step == 3) {return _MessengerApi_getUsername3(ctcTop, interact);}
-  };
 export async function MessengerApi_optIn(ctcTop, interact) {
   if (typeof(ctcTop) !== 'object' || ctcTop._initialize === undefined) {
     return Promise.reject(new Error(`The backend for MessengerApi_optIn expects to receive a contract as its first argument.`));}
@@ -957,17 +515,6 @@ export async function MessengerApi_optIn(ctcTop, interact) {
   const step = await ctc.getCurrentStep()
   stdlib.assert(step == 3, 'API called in the wrong state. Currently in state: ' + step + ', expected:  [3]');
   if (step == 3) {return _MessengerApi_optIn3(ctcTop, interact);}
-  };
-export async function MessengerApi_receiveMessage(ctcTop, interact) {
-  if (typeof(ctcTop) !== 'object' || ctcTop._initialize === undefined) {
-    return Promise.reject(new Error(`The backend for MessengerApi_receiveMessage expects to receive a contract as its first argument.`));}
-  if (typeof(interact) !== 'object') {
-    return Promise.reject(new Error(`The backend for MessengerApi_receiveMessage expects to receive an interact object as its second argument.`));}
-  const ctc = ctcTop._initialize();
-  const stdlib = ctc.stdlib;
-  const step = await ctc.getCurrentStep()
-  stdlib.assert(step == 3, 'API called in the wrong state. Currently in state: ' + step + ', expected:  [3]');
-  if (step == 3) {return _MessengerApi_receiveMessage3(ctcTop, interact);}
   };
 export async function MessengerApi_sendMessage(ctcTop, interact) {
   if (typeof(ctcTop) !== 'object' || ctcTop._initialize === undefined) {
@@ -982,11 +529,11 @@ export async function MessengerApi_sendMessage(ctcTop, interact) {
   };
 const _ALGO = {
   ABI: {
-    impure: [`MessengerApi_getUsername()(address,byte[20])`, `MessengerApi_optIn((address,byte[20]))byte`, `MessengerApi_receiveMessage()(address,byte[20],byte[20],address)`, `MessengerApi_sendMessage((address,byte[20],byte[20],address))byte`],
+    impure: [`MessengerApi_optIn((address,byte[20]))byte`, `MessengerApi_sendMessage((address,byte[20],byte[20],address))byte`],
     pure: [],
-    sigs: [`MessengerApi_getUsername()(address,byte[20])`, `MessengerApi_optIn((address,byte[20]))byte`, `MessengerApi_receiveMessage()(address,byte[20],byte[20],address)`, `MessengerApi_sendMessage((address,byte[20],byte[20],address))byte`]
+    sigs: [`MessengerApi_optIn((address,byte[20]))byte`, `MessengerApi_sendMessage((address,byte[20],byte[20],address))byte`]
     },
-  appApproval: `BiAJAAEDAp4Bq9qCgg21q+bHDWjxmq3dDCYEAQEBAAAUMTIzNDU2Nzg5MDEyMzQ1Njc4OTAiNQAxGEECxSpkSSJbNQGBCFs1AjEZIxJBABwxACEEr0sBKUsCVwB/ZksBKEsCV38fZkhIQgJ/NhoAF0lBAGsiNQQjNQZJIQUMQAArSSEGDEAAEiEGEkQ2GgE1/4ABAzT/UEIAWyEFEkQqNf8pNP9QIQevUEIASUkhCAxAABQhCBJENhoBNf8oNP9QgTSvUEIALoGYjN2ZBhJEKjX/gAECNP9QIQevUEIAFjYaAhc1BDYaAzYaARdJJQxAAXwlEkQkNAESRDQESSISTDQCEhFESTUFNf+ABBKBs300/1CwNP8iVUklDEAAtUkkDEAAWyQSRDT/VwFoNf40/jX9gAQSKAr2NP1QsDT9V0ggNP1XSCCIAcIoNP1QNfxXaTU0/ExQSwEpSwJXAH9mSwEoSwJXfx9mSEiACQAAAAAAAAKsAbAoNQcjMgZCAR5IKzX+gAgAAAAAAAACSzEANP5QNP5QMQBQMQCIAW5XAGlJNf1XAWg0/SJVTVCwMQA0/lA0/lAxAFAxAIgBTlcAaUk1/VcBaDT9IlVNNQcjMgZCAMpJIwxAAFJINP9XATQ1/jT+Nf0xADEAiAEfKDT9UDX8VwBpNPxQSwEpSwJXAH9mSwEoSwJXfx9mSEiABOYdd+Y0/VCwgAkAAAAAAAAB7QGwKDUHIzIGQgBySIAIAAAAAAAAAZExACtQMQCIAMxXaTVJNf5XATQ0/iJVTVCwMQArUDEAiACzV2k1STX+VwE0NP4iVU01ByMyBkIALyISRIGgjQaIAKoiNAESRDQESSISTDQCEhFESTUFNf+ABEc8ozE0/1CwIzIGQgAANf9JNf5BAAokNQEyBjUCQgAfQgAAMRmBBRJEsSKyASKyCCOyEDIJsgkyCrIHs0IABTEZIhJEKjQBFjQCFlBnNAZBAAqABBUffHU0B1CwNABJIwgyBBJEMRYSRCNDMRkiEkRC/98iNQEiNQJC/8NJMRhhQAAFSCEEr4lJKWJLAShiUExIiTQASUojCDUAOAcyChJEOBAjEkQ4CBJEiQ==`,
+  appApproval: `BiAGAAGeAbWr5scNAgMmAwEBAQAAIjUAMRhBAd4qZEkiWzUBgQhbNQIxGSMSQQAbMQAkr0sBKUsCVwB/ZksBKEsCV38fZkhIQgGZNhoAF0lBADMiNQQjNQZJJQxAAA8lEkQ2GgE1/yg0/1BCADCB8Zqt3QwSRDYaATX/KTT/UIE0r1BCABg2GgIXNQQ2GgM2GgEXSSEEDEAA1CEEEkQhBTQBEkQ0BEkiEkw0AhIRREk1BTX/gAQSgbN9NP9QsDT/IlVAAFE0/1cBNDX+NP41/TEAMQCIAS0oNP1QNfxXAGk0/FBLASlLAlcAf2ZLAShLAld/H2ZISIAE5h135jT9ULCACQAAAAAAAAEHAbAoNQcjMgZCAH80/1cBaDX+NP41/YAEEigK9jT9ULA0/VdIIDT9V0ggiADMKDT9UDX8V2k1NPxMUEsBKUsCVwB/ZksBKEsCV38fZkhIgAkAAAAAAAABRAGwKDUHIzIGQgAnIhJEgaCNBogAoiI0ARJENARJIhJMNAISEUSABF8Nq/qwIzIGQgAANf9JNf5BAAshBTUBMgY1AkIAH0IAADEZgQUSRLEisgEisggjshAyCbIJMgqyB7NCAAUxGSISRCo0ARY0AhZQZzQGQQAKgAQVH3x1NAdQsDQASSMIMgQSRDEWEkQjQzEZIhJEQv/fIjUBIjUCQv/DSTEYYUAABEgkr4lJKWJLAShiUExIiTQASUojCDUAOAcyChJEOBAjEkQ4CBJEiQ==`,
   appClear: `Bg==`,
   companionInfo: null,
   extraPages: 0,
@@ -1000,13 +547,13 @@ const _ALGO = {
   };
 export const _stateSourceMap = {
   2: {
-    at: './index.rsh:89:13:after expr stmt semicolon',
+    at: './index.rsh:66:13:after expr stmt semicolon',
     fs: [],
     msg: null,
     who: 'Module'
     },
   3: {
-    at: './index.rsh:58:42:after expr stmt semicolon',
+    at: './index.rsh:51:42:after expr stmt semicolon',
     fs: [],
     msg: null,
     who: 'Module'
@@ -1017,16 +564,12 @@ export const _Connectors = {
   };
 export const _Participants = {
   "Admin": Admin,
-  "MessengerApi_getUsername": MessengerApi_getUsername,
   "MessengerApi_optIn": MessengerApi_optIn,
-  "MessengerApi_receiveMessage": MessengerApi_receiveMessage,
   "MessengerApi_sendMessage": MessengerApi_sendMessage
   };
 export const _APIs = {
   MessengerApi: {
-    getUsername: MessengerApi_getUsername,
     optIn: MessengerApi_optIn,
-    receiveMessage: MessengerApi_receiveMessage,
     sendMessage: MessengerApi_sendMessage
     }
   };

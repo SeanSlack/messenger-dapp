@@ -5,7 +5,7 @@ export function Header({welcome}) {
 
         return (
           <div className="header-box">
-            <h> {welcome}</h>
+            <img src={require('./logo.png')}></img>
           </div>
         );
 };

@@ -147,12 +147,8 @@ function App() {
       groupName: name,
       ready: () => { throw 'Contract has been deployed'; }
     }
-    debugger;
     const ctc = acc.contract(backend); // deploys contract
     ctc.getInfo().then(async (info) => {
-      //console.log(info);
-      //console.log(`contract id: ${JSON.stringify(info.toNumber())}`);
-      //console.log((JSON.stringify(await info.toNumber(), null, 2)));
       const groupID = (JSON.stringify(await info.toNumber(), null, 2));
       setGroupID(groupID);
     });
@@ -161,8 +157,6 @@ function App() {
     }catch(error){
         console.log(error);
     }
-    //console.log("done");
-    //console.log(ctc);
     
     //this.setState({view: 'WaitingForAttacher'}); //displays contract info and waits
   }
@@ -199,7 +193,6 @@ function App() {
     const thisAddress = reach.formatAddress(acc.getAddress());
     const ctc = await acc.contract(backend, groupID);
     const MessengerApi = await ctc.a.MessengerApi;
-    debugger;
 
     if(username.length < 20){
       username = username.padEnd(20, ' ');
@@ -226,7 +219,6 @@ function App() {
   }
 
   const sendMessage=async(message) => {
-    //debugger;
     const senderAddr = reach.formatAddress(acc.getAddress());
     const sendToAddr = reach.formatAddress(acc.getAddress());
 
@@ -274,7 +266,7 @@ function App() {
         <Main className={"main"}>
           <GroupBox>
             <ConnectWallet onClick={connectWallet}/>
-            <CreateGroup onClick={() => setCreateWindow(true)}/>
+            <CreateGroup onClick={createGroup}/>
             <JoinGroup onClick={() => setJoinWindow(true)}/>
             {groupList.map((id, i) => {
               return (<GroupButton value={i} onClick={ e => {
