@@ -39,27 +39,13 @@ const indexerClient = new algosdk.Indexer(indexer_token, indexer_server, indexer
 
 function App() {
 
-  const [count, setCount] = useState(0);
   let [msgList, setMessages] = useState([]);
   let [usrList, setUserList] = useState([]);
   let [addr, setMyAddr] = useState("");
   let [myUsername, setMyUsername] = useState("");
   let [welcomeMessage, setWelcomeMessage] = useState("");
 
-  useEffect(() => {
-    getMessages();
-  });
-
-  useEffect(() => {
-    getUsernames();
-  });
-
-  useEffect(() => {
-    getMyUsername();
-  });
-
   const getMyUsername=async() => {
-    //debugger;
       try {
           const address = await acc.getAddress();
           for (var i=0; i < usrList.length; i++)
@@ -76,11 +62,11 @@ function App() {
   }
 
   const getUsernames=async() => {
-    
     let count = 0;
     if (groupID !== "")
     {
       try{
+        const Publisher = await ctc.e.Publisher;
         Publisher.newUser.monitor((event) => {
           count = count + 1;
           let user = {};
@@ -100,15 +86,13 @@ function App() {
     {
       try{
         const Publisher = await ctc.e.Publisher;
-        setPublisher(Publisher);
-
-      await Publisher.messageSent.monitor((event) => {
-          count = count + 1;
-          let message = {};
-          message = {message: event.what[0].message, username: event.what[0].username};
-          setMessages(prev => [...prev, message]);
-          console.log(count);
-        })
+        Publisher.messageSent.monitor((event) => {
+            count = count + 1;
+            let message = {};
+            message = {message: event.what[0].message, username: event.what[0].username};
+            setMessages(prev => [...prev, message]);
+            console.log(count);
+          })
       }catch(error){
         console.log("Publisher undefined");
       }
@@ -164,21 +148,25 @@ function App() {
   const selectGroup=async(groupID) => {
     setMessages([]);
     setUserList([]);
+    setPublisher({});
     const ctcInfo = JSON.parse(groupID);
     //console.log(ctcInfo);
     //console.log(acc);
     const ctc = await acc.contract(backend, ctcInfo);
     const MessengerApi = await ctc.a.MessengerApi;
-
     // find a way to check in opted in already
     //
+    const Publisher = await ctc.e.Publisher;
     console.log(`connecting to application`, groupID);
 
     setCtc(ctc);
     setApi(MessengerApi);
     setGroupID(ctcInfo);
     setJoinWindow(false);
-    //getMessages();
+    setPublisher(Publisher);
+    await getUsernames();
+    await getMyUsername();
+    await getMessages();
   };
 
   const optIn=async(joinInfo) => {
