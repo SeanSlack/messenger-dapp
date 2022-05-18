@@ -1,0 +1,27 @@
+.user-box {
+    width: 20%;
+    height:100%;
+    background-color: #0000000b;
+    border-radius: 10px;
+    display:inline-block;
+    align-items:center;
+    text-align: center;
+    vertical-align:top;
+    color: #25394ac2;
+}
+
+.user-label {
+    width: 50%;
+    margin-top: 5px;
+    padding: 10px 10px;
+    border-radius: 10px;
+    font-family: Verdana, Geneva, sans-serif;
+    color: #FFF;
+    background-color: #3f6288;
+}
+
+.user-button {
+    height: 100%;
+    width: 100%;
+    color: rgb(247, 247, 247);
+}

@@ -26,7 +26,7 @@ export function MessageWindow({children}) {
 }
 
 export function MessageList({msgList}) {
-    const listData = msgList.map((item, i) => ( <li className="message" key={i} > <strong>{item.from} </strong><br className="br"/> {item.message} <br className="br"/> </li>));
+    const listData = msgList.map((item, i) => ( <li className="message" key={i} > {item.from} <br className="br"/> {item.message} <br className="br"/> </li>));
     return (
         <ul className="message-list">{listData}</ul>
     );

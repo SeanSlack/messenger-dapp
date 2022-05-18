@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useRef } from "react";
+import React, { useEffect, useState, useRef, useCallback } from "react";
 import Wrapper from "./components/views/Wrapper";
 import Main from './components/views/Main';
 import {GroupButton, GroupBox, JoinGroup, ConnectWallet, CreateGroup} from './components/views/Groups';
@@ -7,6 +7,7 @@ import { InputGroupID, JoinWindow } from "./components/views/Join";
 import { InputGroupName, CreateWindow } from "./components/views/Create";
 import { Header } from "./components/views/Header";
 import { OuterBox } from "./components/views/OuterBox";
+import { UserBox, UserLabel } from "./components/views/Users";
 import * as backend from './build/index.main.mjs';
 import { loadStdlib } from '@reach-sh/stdlib';
 import { ALGO_MyAlgoConnect as MyAlgoConnect } from '@reach-sh/stdlib';
@@ -40,23 +41,49 @@ function App() {
 
   const [count, setCount] = useState(0);
   let [msgList, setMessages] = useState([]);
-  
+  let [usrList, setUserList] = useState([]);
 
   useEffect(() => {
     getMessages();
+    getUsernames();
+    console.log(msgList);
+    console.log(usrList);
   });
+
+
+  const getUsernames=async() => {
+    
+    let count = 0;
+    if (groupID !== "")
+    {
+      try{
+        Publisher.newUser.monitor((event) => {
+          count = count + 1;
+          let user = {};
+          user = {username: event.what[0].username, addr: event.what[0].addr};
+          setUserList(prev => [...prev, user]);
+          console.log(count);
+        })
+      }catch(error){
+        console.log("Publisher undefined");
+      }
+    }
+  }
 
   const getMessages=async() => {
     let count = 0;
     if (groupID !== "")
     {
       try{
-        Publisher.messageSent.monitor((event) => {
+        const Publisher = await ctc.e.Publisher;
+        setPublisher(Publisher);
+
+      await Publisher.messageSent.monitor((event) => {
           count = count + 1;
           let message = {};
-          message = {message: event.what[0].message}
+          message = {message: event.what[0].message, username: event.what[0].username};
           setMessages(prev => [...prev, message]);
-          console.log(count)
+          console.log(count);
         })
       }catch(error){
         console.log("Publisher undefined");
@@ -73,25 +100,8 @@ function App() {
   const [isOptedIn, setOptIn] = useState(false);
   const [Publisher, setPublisher] = useState({});
   const [groupInfo, setGroupInfo] = useState({})
-  const [event, setEvent] = useState({});
 
-  
-  const [usrList, setUserList] = useState([{}]);
   const [groupList, setGroups] = useState([]);
-
-  // useEffect(() => {
-  //   // console.log("acc info: ", acc);
-	// 	// console.log("Messages: ", msgList);
-  //   // console.log("ctc info: ", ctc);
-  //   // console.log("groupID: ", groupID);
-  //   // console.log("MessengengerApi: ", MessengerApi);
-  //   // console.log("Publisher: ", Publisher);
-  //   console.log("Count: ", {count});
-  //   console.log("Messages: ", msgList);
-  //   loadMessages();
-  //   console.log("Event: ", event);
-  //   //reload();
-	// });
 
   const connectWallet = async () => {
       const acc = await reach.getDefaultAccount();
@@ -138,7 +148,6 @@ function App() {
     //console.log(acc);
     const ctc = await acc.contract(backend, ctcInfo);
     const MessengerApi = await ctc.a.MessengerApi;
-    const Publisher = await ctc.e.Publisher;
 
     // find a way to check in opted in already
     //
@@ -148,7 +157,6 @@ function App() {
     setApi(MessengerApi);
     setGroupID(ctcInfo);
     setJoinWindow(false);
-    setPublisher(Publisher);
     //getMessages();
   };
 
@@ -189,20 +197,6 @@ function App() {
     setGroupID(groupID);
     setJoinWindow(false);
   }
-
-  // const loadUsernames=async() => {
-  //   let userList = [];
-  //   const Publisher = await ctc.e.Publisher;
-  //   setPublisher(Publisher);
-  //   Publisher.newUser.monitor((event) => {
-  //     userList.push({
-  //       addr: event.what[0].addr,
-  //       username: event.what[0].username
-  //     })
-  //     setUserList(userList);
-  //     console.log(userList);
-  //   })
-  // }
 
   const sendMessage=async(message) => {
     //debugger;
@@ -282,6 +276,10 @@ function App() {
               sendMessage(e.target.value)
             }}/>
         </ChatWindow>
+
+        <UserBox>
+            <UserLabel usrList={usrList}/>
+        </UserBox>
 
         { showJoinWindow ? 
         <JoinWindow>
