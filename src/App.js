@@ -42,14 +42,38 @@ function App() {
   const [count, setCount] = useState(0);
   let [msgList, setMessages] = useState([]);
   let [usrList, setUserList] = useState([]);
+  let [addr, setMyAddr] = useState("");
+  let [myUsername, setMyUsername] = useState("");
+  let [welcomeMessage, setWelcomeMessage] = useState("");
 
   useEffect(() => {
     getMessages();
-    getUsernames();
-    console.log(msgList);
-    console.log(usrList);
   });
 
+  useEffect(() => {
+    getUsernames();
+  });
+
+  useEffect(() => {
+    getMyUsername();
+  });
+
+  const getMyUsername=async() => {
+    //debugger;
+      try {
+          const address = await acc.getAddress();
+          for (var i=0; i < usrList.length; i++)
+          {
+            if (usrList[i].addr == address)
+            {
+              setMyUsername(usrList[i].username);
+              setWelcomeMessage("Welcome, ", usrList[i].username);
+            }
+          }
+      } catch (error) {
+        console.log("No group selected");
+      }
+  }
 
   const getUsernames=async() => {
     
@@ -111,6 +135,7 @@ function App() {
       //console.log("This users account: ", addr);
       getGroups(addr);
       setAcc(acc);
+      setMyAddr(addr);
   }
 
   const createGroup=async(name) => {
@@ -143,6 +168,8 @@ function App() {
   }
 
   const selectGroup=async(groupID) => {
+    setMessages([]);
+    setUserList([]);
     const ctcInfo = JSON.parse(groupID);
     //console.log(ctcInfo);
     //console.log(acc);
@@ -202,14 +229,13 @@ function App() {
     //debugger;
     const senderAddr = reach.formatAddress(acc.getAddress());
     const sendToAddr = reach.formatAddress(acc.getAddress());
-    const username = await getUsername();
 
     if(message.length < 20){
         message = message.padEnd(20, ' ');
     };
     const messageMap = {
       from: senderAddr,
-      username: username,
+      username: myUsername,
       message: message,
       to: sendToAddr
     };
@@ -220,12 +246,6 @@ function App() {
     }catch(error){
       console.log(error);
     }
-  }
-
-  const getUsername=async() => {
-    const username = await MessengerApi.getUsername();
-    //console.log(username.username);
-    return username.username
   }
 
   const getGroups=(addr) => {
@@ -250,7 +270,7 @@ function App() {
   return (
       <Wrapper>
         <OuterBox>
-        <Header/>
+        <Header welcomeMessage={welcomeMessage}/>
         <Main className={"main"}>
           <GroupBox>
             <ConnectWallet onClick={connectWallet}/>
