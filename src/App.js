@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import Wrapper from "./components/views/Wrapper";
 import Main from './components/views/Main';
 import {GroupButton, GroupBox, JoinGroup, ConnectWallet, CreateGroup} from './components/views/Groups';
@@ -38,6 +38,32 @@ const indexerClient = new algosdk.Indexer(indexer_token, indexer_server, indexer
 
 function App() {
 
+  const [count, setCount] = useState(0);
+  let [msgList, setMessages] = useState([]);
+  
+
+  useEffect(() => {
+    getMessages();
+  });
+
+  const getMessages=async() => {
+    let count = 0;
+    if (groupID !== "")
+    {
+      try{
+        Publisher.messageSent.monitor((event) => {
+          count = count + 1;
+          let message = {};
+          message = {message: event.what[0].message}
+          setMessages(prev => [...prev, message]);
+          console.log(count)
+        })
+      }catch(error){
+        console.log("Publisher undefined");
+      }
+    }
+  }
+
   const [showJoinWindow, setJoinWindow] = useState(false);
   const [showCreateWindow, setCreateWindow] = useState(false);
   const [acc, setAcc] = useState({});
@@ -47,28 +73,32 @@ function App() {
   const [isOptedIn, setOptIn] = useState(false);
   const [Publisher, setPublisher] = useState({});
   const [groupInfo, setGroupInfo] = useState({})
+  const [event, setEvent] = useState({});
 
-  const [msgList, setMsgList] = useState([{}]);
+  
   const [usrList, setUserList] = useState([{}]);
   const [groupList, setGroups] = useState([]);
 
-  useEffect(() => {
-    console.log("acc info: ", acc);
-		console.log("Messages: ", msgList);
-    console.log("ctc info: ", ctc);
-    console.log("groupID: ", groupID);
-    console.log("MessengengerApi: ", MessengerApi);
-    console.log("Publisher: ", Publisher);
-
-    reload();
-	});
+  // useEffect(() => {
+  //   // console.log("acc info: ", acc);
+	// 	// console.log("Messages: ", msgList);
+  //   // console.log("ctc info: ", ctc);
+  //   // console.log("groupID: ", groupID);
+  //   // console.log("MessengengerApi: ", MessengerApi);
+  //   // console.log("Publisher: ", Publisher);
+  //   console.log("Count: ", {count});
+  //   console.log("Messages: ", msgList);
+  //   loadMessages();
+  //   console.log("Event: ", event);
+  //   //reload();
+	// });
 
   const connectWallet = async () => {
       const acc = await reach.getDefaultAccount();
       const addr = reach.formatAddress( await acc.getAddress());
       const balAtomic = await reach.balanceOf(acc);
       const bal = reach.formatCurrency(balAtomic, 4);
-      console.log("This users account: ", addr);
+      //console.log("This users account: ", addr);
       getGroups(addr);
       setAcc(acc);
   }
@@ -85,9 +115,9 @@ function App() {
     debugger;
     const ctc = acc.contract(backend); // deploys contract
     ctc.getInfo().then(async (info) => {
-      console.log(info);
-      console.log(`contract id: ${JSON.stringify(info.toNumber())}`);
-      console.log((JSON.stringify(await info.toNumber(), null, 2)));
+      //console.log(info);
+      //console.log(`contract id: ${JSON.stringify(info.toNumber())}`);
+      //console.log((JSON.stringify(await info.toNumber(), null, 2)));
       const groupID = (JSON.stringify(await info.toNumber(), null, 2));
       setGroupID(groupID);
     });
@@ -96,8 +126,8 @@ function App() {
     }catch(error){
         console.log(error);
     }
-    console.log("done");
-    console.log(ctc);
+    //console.log("done");
+    //console.log(ctc);
     
     //this.setState({view: 'WaitingForAttacher'}); //displays contract info and waits
   }
@@ -119,6 +149,7 @@ function App() {
     setGroupID(ctcInfo);
     setJoinWindow(false);
     setPublisher(Publisher);
+    //getMessages();
   };
 
   const optIn=async(joinInfo) => {
@@ -127,8 +158,8 @@ function App() {
     let username = joinInfo.username;
     const groupID = joinInfo.groupID;
 
-    console.log(joinInfo.groupID);
-    console.log(joinInfo.username);
+    //console.log(joinInfo.groupID);
+    //console.log(joinInfo.username);
 
     const thisAddress = reach.formatAddress(acc.getAddress());
     const ctc = await acc.contract(backend, groupID);
@@ -144,11 +175,11 @@ function App() {
     };
     // find a way to check in opted in already
     //
-    console.log(`connecting to application`, groupID);
+    //console.log(`connecting to application`, groupID);
     try{
       const isOptIn = await MessengerApi.optIn(usernameMap);
-      console.log('isOptIn:', isOptIn);
-      console.log('Username set:', username);
+      //console.log('isOptIn:', isOptIn);
+      //console.log('Username set:', username);
       setOptIn(isOptIn);
     }catch(error){
       console.log(error);
@@ -159,36 +190,19 @@ function App() {
     setJoinWindow(false);
   }
 
-  const loadMessages=async() => {
-    let messageList = [];
-    Publisher.messageSent.monitor((event) => {
-      messageList.push({
-        from: event.what[0].username,
-        message: event.what[0].message
-      })
-      setMsgList(messageList);
-    })
-  }
-
-  const loadUsernames=async() => {
-    let userList = [];
-    const Publisher = await ctc.e.Publisher;
-    setPublisher(Publisher);
-    Publisher.newUser.monitor((event) => {
-      userList.push({
-        addr: event.what[0].addr,
-        username: event.what[0].username
-      })
-      setUserList(userList);
-      console.log(userList);
-    })
-  }
-
-  const reload = () => {
-    loadMessages();
-    loadUsernames();
-    console.log("reloading")
-  }
+  // const loadUsernames=async() => {
+  //   let userList = [];
+  //   const Publisher = await ctc.e.Publisher;
+  //   setPublisher(Publisher);
+  //   Publisher.newUser.monitor((event) => {
+  //     userList.push({
+  //       addr: event.what[0].addr,
+  //       username: event.what[0].username
+  //     })
+  //     setUserList(userList);
+  //     console.log(userList);
+  //   })
+  // }
 
   const sendMessage=async(message) => {
     //debugger;
@@ -207,8 +221,8 @@ function App() {
     };
     try{
       const isMessageSent = await MessengerApi.sendMessage(messageMap);
-      console.log(`isMessageSent: ${isMessageSent}`);
-      console.log('Message submitted:', message);
+      //console.log(`isMessageSent: ${isMessageSent}`);
+      //console.log('Message submitted:', message);
     }catch(error){
       console.log(error);
     }
@@ -216,7 +230,7 @@ function App() {
 
   const getUsername=async() => {
     const username = await MessengerApi.getUsername();
-    console.log(username.username);
+    //console.log(username.username);
     return username.username
   }
 
@@ -234,7 +248,7 @@ function App() {
       // console.log(JSON.stringify(response, undefined, 2));
       })().catch(e => {
           console.error(e);
-          console.trace();
+          //console.trace();
       });
   }
 
